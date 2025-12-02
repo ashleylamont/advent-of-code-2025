@@ -14,10 +14,7 @@ const part1 = (rawInput: string) => {
 
   for (const { start, end } of input) {
     for (let id = start; id <= end; id++) {
-      const idStr = id.toString();
-      const left = idStr.substring(0, Math.floor(idStr.length / 2));
-      const right = idStr.substring(Math.floor(idStr.length / 2));
-      if (left === right) {
+      if (/^(\d+)\1$/.test(id.toString())) {
         invalidTotal += id;
       }
     }
@@ -33,18 +30,8 @@ const part2 = (rawInput: string) => {
 
   for (const { start, end } of input) {
     for (let id = start; id <= end; id++) {
-      const idStr = id.toString();
-      for (let substringSize = 1; substringSize <= Math.floor(idStr.length / 2); substringSize++) {
-        if (idStr.length % substringSize !== 0) continue;
-        const substrings: string[] = [];
-        for (let i = 0; i <= idStr.length - substringSize; i += substringSize) {
-          substrings.push(idStr.substring(i, i + substringSize));
-        }
-        const allEqual = substrings.every(s => s === substrings[0]);
-        if (allEqual) {
-          invalidTotal += id;
-          break;
-        }
+      if (/^(\d+)\1+$/.test(id.toString())) {
+        invalidTotal += id;
       }
     }
   }
